@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Etiquetas Pro | K329</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --surface: #ffffff;
+            --background: #f1f5f9;
+            --text-main: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { background-color: var(--background); color: var(--text-main); padding: 16px; padding-bottom: 50px; }
+        
+        .header { text-align: center; padding: 10px 0 24px 0; }
+        .header h1 { font-size: 1.6rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .header p { font-size: 0.9rem; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+        
+        .card { background: var(--surface); border-radius: 24px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 20px; border: 1px solid rgba(255,255,255,0.5); }
+        
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.85rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        select, input[type="text"], input[type="date"] { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md); font-size: 1.05rem; font-weight: 500; color: var(--text-main); outline: none; transition: all 0.2s; background-color: var(--surface); -webkit-appearance: none; }
+        select { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 16px top 50%; background-size: 12px auto; }
+        
+        select:focus, input[type="text"]:focus, input[type="date"]:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        input[readonly] { background-color: var(--background); color: var(--text-light); font-weight: 600; cursor: not-allowed; border-color: transparent; }
+        
+        .dates-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        
+        /* Segmented Control para Armazenamento */
+        .storage-options { display: flex; background: var(--background); border-radius: var(--radius-md); padding: 4px; position: relative; }
+        .storage-options label { flex: 1; text-align: center; margin: 0; cursor: pointer; }
+        .radio-btn { padding: 12px 4px; font-weight: 600; font-size: 0.9rem; color: var(--text-light); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        input[type="radio"] { display: none; }
+        input[type="radio"]:checked + .radio-btn { background-color: var(--surface); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+        /* Stepper de Quantidade */
+        .stepper-container { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 6px; }
+        .stepper-btn { width: 44px; height: 44px; border-radius: 8px; border: none; background: var(--background); color: var(--text-main); font-size: 1.5rem; font-weight: 600; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .stepper-btn:active { background: #e2e8f0; transform: scale(0.95); }
+        .stepper-value { font-size: 1.3rem; font-weight: 700; color: var(--text-main); width: 60px; text-align: center; }
+
+        .btn-print { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 20px; border-radius: var(--radius-lg); font-size: 1.15rem; font-weight: 700; cursor: pointer; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); transition: all 0.2s; }
+        .btn-print:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .btn-print.printing { background: var(--success); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25); }
+        
+        .status { text-align: center; font-size: 0.9rem; color: var(--text-light); font-weight: 500; min-height: 20px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Smart Print</h1>
+    <p>Conexão K329 Bluetooth</p>
+</div>
+
+<div class="card">
+    <div class="input-group">
+        <label>Produto Selecionado</label>
+        <select id="produto">
+            <option value="" disabled selected>Selecione um produto...</option>
+        </select>
+        <input type="text" id="produto-custom" class="hidden" placeholder="Qual o nome do produto?">
+    </div>
+
+    <div class="input-group">
+        <label>Manipulado por</label>
+        <input type="text" id="manipulador" placeholder="Ex: Rafa">
+    </div>
+
+    <div class="dates-grid">
+        <div class="input-group">
+            <label>Abertura</label>
+            <input type="text" id="data-abertura" readonly>
+        </div>
+        <div class="input-group">
+            <label>Vence em</label>
+            <input type="text" id="data-validade-auto" readonly placeholder="Automático">
+            <input type="date" id="data-validade-manual" class="hidden">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>Armazenamento</label>
+        <div class="storage-options">
+            <label>
+                <input type="radio" name="armazenamento" value="CONGELADO">
+                <div class="radio-btn">❄️ Cong.</div>
+            </label>
+            <label>
+                <input type="radio" name="armazenamento" value="RESFRIADO">
+                <div class="radio-btn">🧊 Resf.</div>
+            </label>
+            <label>
+                <input type="radio" name="armazenamento" value="AMBIENTE">
+                <div class="radio-btn">📦 Amb.</div>
+            </label>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>Quantidade a Imprimir</label>
+        <div class="stepper-container">
+            <button class="stepper-btn" onclick="alterarQtd(-1)">−</button>
+            <div class="stepper-value" id="qtd-display">1</div>
+            <button class="stepper-btn" onclick="alterarQtd(1)">+</button>
+        </div>
+    </div>
+
+    <button class="btn-print" id="btnImprimir" onclick="conectarEImprimir()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Imprimir Etiquetas
+    </button>
+    <div id="status-msg" class="status">Aguardando comando...</div>
+</div>
+
+<script>
+    // ==========================================
+    // LÓGICA DE INTERFACE
+    // ==========================================
+    const bancoProdutos = [
+        { id: 1, nome: "QUEIJO MUSSARELA", diasValidade: 7, tipo: "RESFRIADO" },
+        { id: 2, nome: "PRESUNTO COZIDO", diasValidade: 5, tipo: "RESFRIADO" },
+        { id: 3, nome: "CARNE MOIDA", diasValidade: 2, tipo: "RESFRIADO" },
+        { id: 4, nome: "PAO FRANCES", diasValidade: 30, tipo: "CONGELADO" },
+        { id: 5, nome: "BOLO CHOCOLATE", diasValidade: 3, tipo: "AMBIENTE" }
+    ];
+
+    let quantidadeAtual = 1;
+
+    function formatarDataBR(data) {
+        return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function removerAcentos(texto) {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+    }
+
+    function alterarQtd(valor) {
+        quantidadeAtual += valor;
+        if (quantidadeAtual < 1) quantidadeAtual = 1;
+        if (quantidadeAtual > 100) quantidadeAtual = 100;
+        document.getElementById('qtd-display').innerText = quantidadeAtual;
+    }
+
+    function iniciarApp() {
+        const select = document.getElementById('produto');
+        bancoProdutos.forEach(prod => {
+            select.appendChild(new Option(prod.nome, prod.id));
+        });
+        
+        let optOutro = document.createElement('option');
+        optOutro.value = "outro"; optOutro.textContent = "✎ OUTRO (DIGITAR)...";
+        select.appendChild(optOutro);
+
+        select.addEventListener('change', function() {
+            const dataHoje = new Date();
+            document.getElementById('data-abertura').value = formatarDataBR(dataHoje);
+
+            const inputCustom = document.getElementById('produto-custom');
+            const inputValAuto = document.getElementById('data-validade-auto');
+            const inputValManual = document.getElementById('data-validade-manual');
+            const radios = document.getElementsByName('armazenamento');
+
+            if (this.value === "outro") {
+                // Modo Manual Elegante
+                inputCustom.classList.remove('hidden');
+                inputValAuto.classList.add('hidden');
+                inputValManual.classList.remove('hidden');
+                
+                inputCustom.value = "";
+                inputValManual.value = "";
+                Array.from(radios).forEach(r => r.checked = false);
+            } else {
+                // Modo Automático
+                inputCustom.classList.add('hidden');
+                inputValAuto.classList.remove('hidden');
+                inputValManual.classList.add('hidden');
+                
+                const p = bancoProdutos.find(x => x.id == this.value);
+                const dataFutura = new Date();
+                dataFutura.setDate(dataHoje.getDate() + p.diasValidade);
+                
+                inputValAuto.value = formatarDataBR(dataFutura);
+                Array.from(radios).forEach(r => { r.checked = (r.value === p.tipo); });
+            }
+        });
+    }
+
+    // ==========================================
+    // LÓGICA BLUETOOTH ESC/POS
+    // ==========================================
+    const ESC = "\x1B", GS = "\x1D", INIT = ESC + "@";              
+    const ALIGN_CENTER = ESC + "a\x01", ALIGN_LEFT = ESC + "a\x00";    
+    const BOLD_ON = ESC + "E\x01", BOLD_OFF = ESC + "E\x00";      
+    const TEXT_NORMAL = GS + "!\x00", TEXT_DOUBLE = GS + "!\x11";    
+    const FEED_END = "\x0A\x0A\x0A\x0A"; 
+    const ESPACO_ESQ = "   ";
+
+    let dispositivoBluetooth;
+    let caracteristicaImpressao;
+
+    async function conectarEImprimir() {
+        const idProduto = document.getElementById('produto').value;
+        if (!idProduto) return alert("Por favor, selecione um produto primeiro!");
+
+        // 1. Processa Produto
+        let nomeFinalProduto = "";
+        if (idProduto === "outro") {
+            nomeFinalProduto = document.getElementById('produto-custom').value;
+            if (!nomeFinalProduto) return alert("Digite o nome do produto!");
+        } else {
+            nomeFinalProduto = bancoProdutos.find(p => p.id == idProduto).nome;
+        }
+        nomeFinalProduto = removerAcentos(nomeFinalProduto);
+
+        // 2. Processa Datas
+        const abertura = document.getElementById('data-abertura').value;
+        let validadeFinal = "";
+        
+        if (idProduto === "outro") {
+            const dataNat = document.getElementById('data-validade-manual').value; // Formato YYYY-MM-DD
+            if (!dataNat) return alert("Escolha a data de validade no calendário!");
+            // Converte YYYY-MM-DD para DD/MM/YYYY
+            const partes = dataNat.split('-');
+            validadeFinal = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        } else {
+            validadeFinal = document.getElementById('data-validade-auto').value;
+        }
+
+        // 3. Outros Dados
+        const manipuladorCaps = removerAcentos(document.getElementById('manipulador').value || "NAO INF.");
+        const armazenamentoSel = document.querySelector('input[name="armazenamento"]:checked');
+        const armazenamento = armazenamentoSel ? armazenamentoSel.value : "NAO INF.";
+
+        let checkC = armazenamento === "CONGELADO" ? "[X]" : "[ ]";
+        let checkR = armazenamento === "RESFRIADO" ? "[X]" : "[ ]";
+        let checkA = armazenamento === "AMBIENTE"  ? "[X]" : "[ ]";
+
+        // Layout da Etiqueta
+        let cupomBase = "";
+        cupomBase += ALIGN_LEFT + BOLD_ON + ESPACO_ESQ + "PRODUTO:\n";
+        cupomBase += ALIGN_CENTER + TEXT_DOUBLE + nomeFinalProduto + "\n\n" + TEXT_NORMAL;
+
+        cupomBase += ALIGN_LEFT + BOLD_ON + ESPACO_ESQ + "ABERTURA:\n" + BOLD_OFF;
+        cupomBase += ALIGN_CENTER + TEXT_DOUBLE + abertura + "\n\n" + TEXT_NORMAL;
+
+        cupomBase += ALIGN_LEFT + BOLD_ON + ESPACO_ESQ + "VENCE EM:\n" + BOLD_OFF;
+        cupomBase += ALIGN_CENTER + TEXT_DOUBLE + validadeFinal + "\n\n" + TEXT_NORMAL;
+
+        cupomBase += ALIGN_LEFT + BOLD_OFF + "--------------------------------\n";
+        cupomBase += BOLD_ON + ESPACO_ESQ + "MANIPULADOR: " + BOLD_OFF + manipuladorCaps + "\n";
+        cupomBase += BOLD_ON + ESPACO_ESQ + "ARMAZENAMENTO:\n" + BOLD_OFF;
+        
+        cupomBase += ESPACO_ESQ + ESPACO_ESQ + checkC + " Congelado\n";
+        cupomBase += ESPACO_ESQ + ESPACO_ESQ + checkR + " Resfriado\n";
+        cupomBase += ESPACO_ESQ + ESPACO_ESQ + checkA + " Ambiente\n";
+
+        cupomBase += "--------------------------------\n";
+        cupomBase += FEED_END; 
+
+        const statusMsg = document.getElementById('status-msg');
+        const btnImprimir = document.getElementById('btnImprimir');
+
+        try {
+            if (!dispositivoBluetooth || !dispositivoBluetooth.gatt.connected) {
+                statusMsg.textContent = "Buscando K329...";
+                dispositivoBluetooth = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true,
+                    optionalServices: ['000018f0-0000-1000-8000-00805f9b34fb', '49535343-fe7d-4ae5-8fa9-9fafd205e455', 'e7810a71-73ae-499d-8c15-faa9aef0c3f2']
+                });
+                statusMsg.textContent = "Conectando...";
+                const server = await dispositivoBluetooth.gatt.connect();
+                const services = await server.getPrimaryServices();
+                for (const service of services) {
+                    const characteristics = await service.getCharacteristics();
+                    for (const char of characteristics) {
+                        if (char.properties.write || char.properties.writeWithoutResponse) {
+                            caracteristicaImpressao = char;
+                            break;
+                        }
+                    }
+                    if (caracteristicaImpressao) break;
+                }
+            }
+
+            if (caracteristicaImpressao) {
+                btnImprimir.classList.add('printing');
+                const encoder = new TextEncoder();
+                const maxChunk = 150; 
+
+                for (let numEtiqueta = 1; numEtiqueta <= quantidadeAtual; numEtiqueta++) {
+                    btnImprimir.innerHTML = `⏳ Imprimindo ${numEtiqueta}/${quantidadeAtual}...`;
+                    statusMsg.textContent = `Enviando etiqueta ${numEtiqueta}...`;
+
+                    let cupomIndividual = INIT + cupomBase;
+                    const dadosBytes = encoder.encode(cupomIndividual);
+                    
+                    for (let i = 0; i < dadosBytes.length; i += maxChunk) {
+                        const chunk = dadosBytes.slice(i, i + maxChunk);
+                        await caracteristicaImpressao.writeValue(chunk);
+                        await new Promise(resolve => setTimeout(resolve, 40));
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+
+                statusMsg.textContent = `✅ ${quantidadeAtual} Etiqueta(s) Impressa(s)!`;
+                statusMsg.style.color = "var(--success)";
+            } else {
+                throw new Error("Serviço de impressão BT não encontrado.");
+            }
+        } catch (erro) {
+            console.error(erro);
+            statusMsg.textContent = "❌ Erro de Conexão. Tente novamente.";
+            statusMsg.style.color = "#ef4444";
+            dispositivoBluetooth = null;
+        } finally {
+            setTimeout(() => {
+                btnImprimir.classList.remove('printing');
+                btnImprimir.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Imprimir Etiquetas`;
+            }, 2500);
+        }
+    }
+
+    window.onload = iniciarApp;
+</script>
+
+</body>
+</html>
